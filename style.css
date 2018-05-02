@@ -1,0 +1,37 @@
+.card-container {
+  width: 650px;
+  display: flex;
+  flex-wrap: wrap;
+}
+.card {
+  width: 180px;
+  height: 180px;
+  background-color: red;
+}
+
+.card1 {
+background-image: url('./img/ada-lovelace.jpg');
+width: 180px;
+height: 180px;
+}
+.card2 {
+background-image: url('./img/chien-s.png');
+width: 180px;
+height: 180px;
+}
+.card3 {
+background-image: url('./img/grace-hopper.jpg');
+background-size: 180px;
+width: 180px;
+height: 180px;
+}
+
+.back {
+  width: 180px;
+  height: 180px;
+  background-image: url('./img/ada-logo.png')
+}
+
+.hidden {
+  display: none;
+}
