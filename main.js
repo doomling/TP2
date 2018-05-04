@@ -118,13 +118,13 @@ $('#card-container').on('click', '.card', function() {
         match(clicked, clickedDiv);
         turn++;
         $('#turnos').html(turn);
-        if (turn > chances) {
-          $('#status').append('<h1>lo siento mucho, se terminaron tus turnos</h1>');
+        keepGoing = endGame(cards);
+          if (turn <= chances && keepGoing == false) {
+            $('#status').append('<h1> G A N A S T E </h1>');
+          }
+          if (turn > chances) {
+            $('#status').append('<h1>lo siento mucho, se terminaron tus turnos</h1>');
        }
       }
-      keepGoing = endGame(cards);
-        if (turn <= chances && keepGoing == false) {
-          $('#status').append('<h1> G A N A S T E </h1>');
-        }
       }
   });
