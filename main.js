@@ -116,7 +116,6 @@ $('#card-container').on('click', '.card', function() {
         clicked.push(cards[a]);
         clickedDiv.push( this );
         match(clicked, clickedDiv);
-        turn++;
         $('#turnos').html(turn);
         keepGoing = endGame(cards);
           if (turn <= chances && keepGoing == false) {
@@ -124,7 +123,8 @@ $('#card-container').on('click', '.card', function() {
           }
           if (turn > chances) {
             $('#status').append('<h1>lo siento mucho, se terminaron tus turnos</h1>');
-       }
-      }
-      }
+          }
+        }
+     turn++;
+    }
   });
