@@ -123,8 +123,8 @@ $('#card-container').on('click', '.card', function() {
        }
       }
       keepGoing = endGame(cards);
-      if (turn < chances && keepGoing == false) {
-        $('#status').append('<h1> G A N A S T E </h1>');
-      }
+        if (turn <= chances && keepGoing == false) {
+          $('#status').append('<h1> G A N A S T E </h1>');
+        }
       }
   });
