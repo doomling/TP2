@@ -9,11 +9,14 @@ El juego de memotest deberá cumplir las siguientes consignas:
 
 */
 
+/* Initial setup */
 const numberOfCards = 12;
 const numberOfTypes = 3;
 let turn = 1;
 const chances = 24;
 let position = [];
+
+/*filling am array with random numbers*/
 
 function fillPositions(array) {
   let random = Math.floor(Math.random() * numberOfCards);
@@ -27,6 +30,8 @@ function fillPositions(array) {
 }
 
 position = fillPositions(position);
+
+/* seting up my cards in an ordered array */
 
 const red = $('<div class="card card1"></div>');
 const blue = $('<div class="card card2"></div>');
@@ -49,8 +54,6 @@ function getCards(type1, type2, type3) {
   return arr;
 }
 
-let cards = getCards(red, blue, green);
-
 function setCards (arr, masterArr) {
   for (var i = 0; i < masterArr.length; i++) {
       var z = masterArr.indexOf(i);
@@ -59,11 +62,20 @@ function setCards (arr, masterArr) {
   return masterArr;
 }
 
+/* here is my ordered array */
+let cards = getCards(red, blue, green);
+/* and now we shuffle */
 cards = setCards(cards, position);
+
+/* END INITIAL SETUP */
+
+/* Appending the cards to the page container */
 
 $('#begin').one('click', function(){
   for (var i = 0; i < cards.length; i++) {
-    $('#card-container').append(cards[i]['front'].clone());
+    console.log(cards[i])
+    $('#container').append(cards[i]['front'].clone());
+    /* Adding .back class so we don't see the content */
     $('.card').each(function() {
     $( this ).addClass('back');
     });
@@ -73,24 +85,16 @@ $('#begin').one('click', function(){
 let clicked = []
 let clickedDiv = []
 
-function match (clicked, div) {
-  if (clicked.length > 1) {
+/* some functions to check if cards match and if there are
+any unmatched left */
+
+function match (clicked) {
     if (clicked[0]['front'] == clicked[1]['front']) {
-      clicked[0]['matched'] = true;
-      clicked[1]['matched'] = true;
-      $(div[0]).removeClass('card')
-      $(div[1]).removeClass('card')
+      return true;
     } else {
-      $('.card').each(function() {
-        $( this ).addClass('back');
-      });
-      clicked[0]['clicked'] = false;
-      clicked[1]['clicked'] = false;
+      return false;
     }
-    clicked.length = 0;
-    div.length = 0;
   }
-}
 
 function endGame (cards) {
   let cont = false;
@@ -106,25 +110,55 @@ function endGame (cards) {
 
 let keepGoing = endGame(cards);
 
-$('#card-container').on('click', '.card', function() {
+$(document).on('click', '.card', function() {
+    /* Using the index of the clicked element should give me the index
+    of my desired object */
     let a = $(this).index();
 
     if (turn <= chances && keepGoing == true) {
       if (cards[a]['clicked'] == false ) {
-        $( this ).removeClass('back');
+        $( this ).removeClass('back').toggleClass('back-clicked');
         cards[a]['clicked'] = true;
+
+        /* We need to save both the object and its corresponding
+        div */
         clicked.push(cards[a]);
         clickedDiv.push( this );
-        match(clicked, clickedDiv);
-        $('#turnos').html(turn);
-        keepGoing = endGame(cards);
-        turn++;
-          if (turn <= chances && keepGoing == false) {
-            $('#status').append('<h1> G A N A S T E </h1>');
-          }
-          if (turn > chances) {
-            $('#status').append('<h1>lo siento mucho, se terminaron tus turnos</h1>');
+
+          if (clicked.length > 1) {
+            if (match(clicked) == true) {
+              clicked[0]['matched'] = true;
+              clicked[1]['matched'] = true;
+              $(clickedDiv[0]).removeClass('card');
+              $(clickedDiv[1]).removeClass('card');
+            }
+
+            else {
+              for (var i = 0; i < cards.length; i++) {
+                $(clickedDiv[i]).delay(300).queue(function () {
+                $(this).toggleClass('back-clicked');
+                $(this).addClass('back')});
+              }
+              clicked[0]['clicked'] = false;
+              clicked[1]['clicked'] = false;
+            }
+
+          clicked.length = 0;
+          clickedDiv.length = 0;
+          $('#turnos').html(turn);
+          keepGoing = endGame(cards);
+          turn++;
           }
         }
-    }
+      }
+
+      if (turn <= chances && keepGoing == false) {
+        $('#status').removeClass('hidden').addClass('status');
+        $('#status').append('<h1> G A N A S T E </h1>');
+      }
+
+      if (turn > chances) {
+        $('#status').removeClass('hidden').addClass('status')
+        $('#status').append('<h1>lo siento mucho, se terminaron tus turnos</h1>');
+      }
   });
