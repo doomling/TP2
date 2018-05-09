@@ -115,9 +115,9 @@ $(document).on('click', '.card', function() {
     of my desired object */
     let a = $(this).index();
 
-    if (turn <= chances && keepGoing == true) {
+    if (turn <= chances && keepGoing == true && $( this ).hasClass('clicky') == false) {
       if (cards[a]['clicked'] == false ) {
-        $( this ).removeClass('back').toggleClass('back-clicked');
+        $( this ).removeClass('back').addClass('back-clicked').addClass('clicky');
         cards[a]['clicked'] = true;
 
         /* We need to save both the object and its corresponding
@@ -134,17 +134,34 @@ $(document).on('click', '.card', function() {
             }
 
             else {
-              for (var i = 0; i < cards.length; i++) {
-                $(clickedDiv[i]).delay(300).queue(function () {
-                $(this).toggleClass('back-clicked');
-                $(this).addClass('back')});
+              for (var i = 0; i < 2; i++) {
+                  $( this ).addClass('back-clicked');
               }
+                  $('.card').each(function (index) {
+                    let self = this;
+                    setTimeout(function () {
+                      $( self ).removeClass('clicky').removeClass('back-clicked').addClass('back');
+                    }, index*200);
+                });
+                /*
+                $('.button').each(function(index){
+                var self = this
+                setTimeout(function () {
+                alert($(self).attr("id"));
+                }, index*1000);
+                });
+
+                $('.button').each($).wait(1000, function(index) {
+                  alert('whatever you like: ' + this.text());
+                  });​
+
+                */
               clicked[0]['clicked'] = false;
               clicked[1]['clicked'] = false;
             }
 
-          clicked.length = 0;
-          clickedDiv.length = 0;
+          clicked = [];
+          clickedDiv = [];
           $('#turnos').html(turn);
           keepGoing = endGame(cards);
           turn++;
