@@ -70,6 +70,11 @@ nav {
   background-color: #5FCDE4;
   border: 4px solid white;
   padding:10px;
+  cursor: pointer;
+}
+
+.retry:hover {
+  background-color: #4BD2FF;
 }
 
 .character-wrapper img {
@@ -153,11 +158,19 @@ input {
   align-items: center;
   border: 4px solid white;
   border-radius: 20px;
+  cursor: pointer;
+}
+.button:hover {
+  background-color: #4BD2FF;
 }
 
-hr {
+.turn-container {
   border: 3px solid white;
   width: 80%;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .turnos {
@@ -193,6 +206,7 @@ hr {
   position: relative;
   transition: transform 0.5s;
   transform-style: preserve-3d;
+  cursor: pointer;
 }
 
 .card1 {
@@ -242,6 +256,5 @@ hr {
   height: 100vh;
   position: absolute;
   z-index: 3;
-  background-color: rgba(233, 233, 233, 0.5)    /* 70% opaque red */
- /*#704777;*/
+  background-color: rgba(233, 233, 233, 0.5);
 }
