@@ -137,12 +137,12 @@ $(document).on('click', '.card', function() {
             else {
               for (var i = 0; i < 2; i++) {
                   $( this ).addClass('back-clicked');
-              }
+                  }
                   $('.card').each(function (index) {
                     let self = this;
                     setTimeout(function () {
                       $( self ).removeClass('clicky').removeClass('back-clicked').addClass('back');
-                    }, index*100);
+                    }, 300);
                 });
 
               clicked[0]['clicked'] = false;
