@@ -72,6 +72,7 @@ cards = setCards(cards, position);
 /* Appending the cards to the page container */
 
 $('#begin').one('click', function(){
+  $('#container').removeClass('invisible');
   for (var i = 0; i < cards.length; i++) {
     console.log(cards[i])
     $('#container').append(cards[i]['front'].clone());
@@ -141,21 +142,9 @@ $(document).on('click', '.card', function() {
                     let self = this;
                     setTimeout(function () {
                       $( self ).removeClass('clicky').removeClass('back-clicked').addClass('back');
-                    }, index*200);
-                });
-                /*
-                $('.button').each(function(index){
-                var self = this
-                setTimeout(function () {
-                alert($(self).attr("id"));
-                }, index*1000);
+                    }, index*100);
                 });
 
-                $('.button').each($).wait(1000, function(index) {
-                  alert('whatever you like: ' + this.text());
-                  });​
-
-                */
               clicked[0]['clicked'] = false;
               clicked[1]['clicked'] = false;
             }
@@ -171,11 +160,15 @@ $(document).on('click', '.card', function() {
 
       if (turn <= chances && keepGoing == false) {
         $('#status').removeClass('hidden').addClass('status');
-        $('#status').append('<h1> G A N A S T E </h1>');
+        $('#message').html('ganaste!');
       }
 
       if (turn > chances) {
         $('#status').removeClass('hidden').addClass('status')
-        $('#status').append('<h1>lo siento mucho, se terminaron tus turnos</h1>');
+        $('#message').html('perdiste');
       }
   });
+
+$('#retry').on('click', function(){
+  window.location.reload(true);
+});
