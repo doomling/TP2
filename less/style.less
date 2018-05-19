@@ -1,0 +1,264 @@
+@main-color: #FFCAD4;
+@secondary-color: #F4ACB7;
+
+.margin-padding-zero {
+  padding: 0;
+  margin: 0;
+}
+.genericBorder {
+  border: 4px solid white;
+  border-radius: 20px;
+}
+
+.genericButton {
+  margin: 5%;
+  width: 120px;
+  text-align: center;
+  font-size: 30px;
+  background-color: #5FCDE4;
+  padding:10px;
+  cursor: pointer;
+  .genericBorder();
+}
+
+@font-face {
+    font-family: pixelated;
+    src: url("../font/Fairfax.ttf");
+}
+
+
+body {
+  .margin-padding-zero();
+  font-family: pixelated;
+  background-color: @main-color;
+  font-size: 20px;
+  color: white;
+}
+
+.hidden {
+  display: none;
+}
+
+.wrapper {
+  padding: 2.5vw;
+  width: 80vw;
+  height: 80vh;
+  max-height: 100vh;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  position: relative;
+}
+
+/** win - lose modals **/
+
+.status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top:0;
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  z-index: 3;
+  background-color: rgba(233, 233, 233, 0.5);
+}
+
+
+.border-wrapper {
+  background-color: @secondary-color;
+  border-radius: 20px;
+  padding: 30px;
+  .genericBorder();
+}
+
+.character-wrapper {
+  width: 650px;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 30px;
+  color: #000;
+  .genericBorder();
+
+  img {
+    width: 350px;
+    height: auto;
+  }
+}
+
+.bubble-wrapper {
+  background-image: url('../img/bubble.png');
+  margin-left: -50px;
+  background-repeat: no-repeat;
+  background-size: 300px;
+  width: 300px;
+  height: 80px;
+  align-self: flex-start;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 10px;
+  font-family: pixelated;
+
+  h2 {
+    .margin-padding-zero();
+  }
+}
+
+.retry {
+  .genericButton();
+}
+
+.retry:hover {
+  background-color: #4BD2FF;
+}
+
+/** end win - lose modals **/
+
+/** left column **/
+
+.welcome {
+  width: 80%;
+  font-size: 30px;
+  padding: 10px;
+  text-align: center;
+}
+
+.input-wrapper {
+  background-image: url('../img/bubble.png');
+  padding-top:4px;
+  margin-top: 20px;
+  background-repeat: no-repeat;
+  background-size: 300px;
+  width: 300px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  font-family: pixelated;
+  position: relative;
+}
+
+.items-wrapper {
+  width: 25vw;
+  height: 84vh;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  padding: 2vh;
+  border: 3px solid white;
+  background-color: @secondary-color;
+
+  h3 {
+    margin: 10px;
+  }
+
+  input {
+    width: 80%;
+    height: 40px;
+    border: none;
+    font-family: pixelated;
+    font-size: 25px;
+    text-align: center;
+  }
+
+  .button {
+    .genericButton();
+  }
+
+  .button:hover {
+    background-color: #4BD2FF;
+  }
+
+  .turn-container {
+    .genericBorder();
+    width: 80%;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .turnos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid white;
+    padding: 1vh;
+    width: 40px;
+    height: 40px;
+    background-color: #5FCDE4;
+    color: white;
+    font-size: 1.5em;
+    .genericBorder();
+  }
+}
+
+footer {
+font-size: 18px;
+position: absolute;
+bottom: 10px;
+}
+
+/** end left column **/
+
+/** cards **/
+
+.container {
+  padding: 2.5vw;
+  width: 100%;
+  margin-left: 2vw;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  border: 3px solid white;
+  background-color: @secondary-color;
+}
+
+.generiCcard {
+  width: 180px;
+  height: 180px;
+  position: relative;
+  transition: transform 0.5s;
+  transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  transform-origin: 50% 50%;
+
+  img {
+    height: 180px;
+    }
+  }
+
+.card {
+  .generiCcard();
+}
+
+.clicked-card {
+  .generiCcard();
+}
+
+.back {
+  backface-visibility: hidden;
+  position: absolute;
+  top: 0;
+}
+
+.front {
+  transform: rotateY( 180deg );
+  position: absolute;
+  top:0;
+  z-index: 2;
+}
+
+.flip {
+  transform: rotateY( 180deg );
+}
+
+.invisible {
+  visibility: hidden;
+}

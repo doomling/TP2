@@ -33,9 +33,9 @@ position = fillPositions(position);
 
 /* seting up my cards in an ordered array */
 
-const red = $('<div class="card card1"></div>');
-const blue = $('<div class="card card2"></div>');
-const green = $('<div class="card card3"></div>');
+const card1 = $('<div class="card"><img class="back" src="./img/ada-logo.png"><img class="front" src="./img/ada-lovelace.jpg">');
+const card2 = $('<div class="card"><img class="back" src="./img/ada-logo.png"><img class="front" src="./img/grace-hopper.jpg">');
+const card3 = $('<div class="card"><img class="back" src="./img/ada-logo.png"><img class="front" src="./img/chien-s.png">');
 
 function getCards(type1, type2, type3) {
 
@@ -63,8 +63,10 @@ function setCards (arr, masterArr) {
 }
 
 /* here is my ordered array */
-let cards = getCards(red, blue, green);
+let cards = getCards(card1, card2, card3);
+
 /* and now we shuffle */
+
 cards = setCards(cards, position);
 
 /* END INITIAL SETUP */
@@ -72,19 +74,17 @@ cards = setCards(cards, position);
 /* Appending the cards to the page container */
 
 $('#begin').one('click', function(){
+  let name = $('#name').val();
+  $('#name').html(name);
   $('#container').removeClass('invisible');
   for (var i = 0; i < cards.length; i++) {
     console.log(cards[i])
     $('#container').append(cards[i]['front'].clone());
     /* Adding .back class so we don't see the content */
-    $('.card').each(function() {
+/*    $('.card').each(function() {
     $( this ).addClass('back');
-    });
-  }
-});
-
-let clicked = []
-let clickedDiv = []
+*/    }
+  });
 
 /* some functions to check if cards match and if there are
 any unmatched left */
@@ -109,41 +109,40 @@ function endGame (cards) {
 
 // let the game begin //
 
+let clicked = [];
+let clickedDiv = [];
 let keepGoing = endGame(cards);
 
 $(document).on('click', '.card', function() {
     /* Using the index of the clicked element should give me the index
     of my desired object */
-    let a = $(this).index();
+    let index = $(this).index();
 
-    if (turn <= chances && keepGoing == true && $( this ).hasClass('clicky') == false) {
-      if (cards[a]['clicked'] == false ) {
-        $( this ).removeClass('back').addClass('back-clicked').addClass('clicky');
-        cards[a]['clicked'] = true;
+    if (turn <= chances && keepGoing == true && $( this ).hasClass('clicked-card') == false) {
+
+      if (cards[index]['clicked'] == false ) {
+      $( this ).addClass('flip').addClass('flipped');
+      cards[index]['clicked'] = true;
 
         /* We need to save both the object and its corresponding
         div */
-        clicked.push(cards[a]);
+        clicked.push(cards[index]);
         clickedDiv.push( this );
 
           if (clicked.length > 1) {
+
             if (match(clicked) == true) {
               clicked[0]['matched'] = true;
               clicked[1]['matched'] = true;
-              $(clickedDiv[0]).removeClass('card');
-              $(clickedDiv[1]).removeClass('card');
+              $(clickedDiv[0]).removeClass('card').addClass('clicked-card').removeClass('flipped');
+              $(clickedDiv[1]).removeClass('card').addClass('clicked-card').removeClass('flipped');
             }
 
             else {
-              for (var i = 0; i < 2; i++) {
-                  $( this ).addClass('back-clicked');
-                  }
-                  $('.card').each(function (index) {
-                    let self = this;
-                    setTimeout(function () {
-                      $( self ).removeClass('clicky').removeClass('back-clicked').addClass('back');
-                    }, 300);
-                });
+
+              setTimeout(function() {
+                $('.flipped').removeClass('flip').removeClass('flipped').removeClass('clicked-card');
+              }, 600);
 
               clicked[0]['clicked'] = false;
               clicked[1]['clicked'] = false;
