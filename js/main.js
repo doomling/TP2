@@ -125,6 +125,7 @@ to read when done this way */
 let clicked = [];
 let clickedDiv = [];
 let keepGoing = endGame(cards);
+let canIclick = true;
 
 $(document).on('click', '.card', function() {
 
@@ -134,7 +135,10 @@ $(document).on('click', '.card', function() {
     I'm pretty sure I could have done the comparision using just css classes
     but objects feel... cleaner
     */
-
+    if (!canIclick) {
+      return;
+    }
+    
     let index = $(this).index();
 
     /* so, this should only work while turn is less or = to 24, and there are still unmatched
@@ -153,12 +157,14 @@ $(document).on('click', '.card', function() {
         clickedDiv.push( this );
 
           if (clicked.length > 1) {
-
+            canIclick = false;
             if (match(clicked) == true) {
               clicked[0]['matched'] = true;
               clicked[1]['matched'] = true;
               $(clickedDiv[0]).removeClass('card').addClass('clicked-card').removeClass('flipped');
               $(clickedDiv[1]).removeClass('card').addClass('clicked-card').removeClass('flipped');
+
+              canIclick = true;
             }
 
             else {
@@ -166,6 +172,7 @@ $(document).on('click', '.card', function() {
         /* cards that are not a match need to be flipped back */
 
               setTimeout(function() {
+                canIclick = true;
                 $('.flipped').removeClass('flip').removeClass('flipped').removeClass('clicked-card');
               }, 600);
 

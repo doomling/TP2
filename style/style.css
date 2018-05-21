@@ -230,6 +230,7 @@ footer {
   transition: transform 0.5s;
   transform-style: preserve-3d;
   transform-origin: 50% 50%;
+  cursor: pointer;
 }
 .card img {
   height: 160px;
