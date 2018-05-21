@@ -180,9 +180,9 @@ $(document).on('click', '.card', function() {
 
           clicked = [];
           clickedDiv = [];
+          turn++;
           $('#turnos').html(turn);
           keepGoing = endGame(cards);
-          turn++;
           }
         }
       }
