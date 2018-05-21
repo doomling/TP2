@@ -84,15 +84,18 @@ cards = setCards(cards, position);
 
 /* Appending the cards to the page container */
 
+function appendCards() {
+  for (var i = 0; i < cards.length; i++) {
+    $('#container').append(cards[i]['front'].clone());
+  }
+}
+
 $('#begin').one('click', function(){
   let name = $('#name').val();
   $('#name').html(name);
   $('#container').removeClass('invisible');
-
-    for (var i = 0; i < cards.length; i++) {
-      $('#container').append(cards[i]['front'].clone());
-    }
-
+  $('#begin').remove();
+    appendCards();
   });
 
 /* some functions to check if cards match and if there are
@@ -138,7 +141,7 @@ $(document).on('click', '.card', function() {
     if (!canIclick) {
       return;
     }
-    
+
     let index = $(this).index();
 
     /* so, this should only work while turn is less or = to 24, and there are still unmatched
@@ -210,7 +213,19 @@ $(document).on('click', '.card', function() {
     /* reload the page if user wants to retry */
 
 $('#retry').on('click', function(){
-  window.location.reload(true);
+//  window.location.reload(true);
+  position = []
+  fillPositions(position);
+  cards = getCards(card1, card2, card3);
+  cards = setCards(cards, position);
+  keepGoing = true;
+  turn = 1;
+  $('#turnos').html(turn);
+  $('#status').addClass('hidden').removeClass('status');
+  $('.card').remove();
+  $('.clicked-card').remove();
+  appendCards();
+
 });
 
 /* Thanks for taking the time to read my code, I had a blast coding it and sincerly
