@@ -1,4 +1,5 @@
-/*
+/* original requirements ->
+
 El juego de memotest deberá cumplir las siguientes consignas:
 
 1- Tener un tablero de 12 fichas (6 pares)
@@ -9,14 +10,21 @@ El juego de memotest deberá cumplir las siguientes consignas:
 
 */
 
+/* there are a lot of comments in my code, and it's all in English
+because a guy I really admire once told me I should **ONLY** document in said language.
+
+Feel free to imagine
+it's narrated by Morgan Freeman */
+
 /* Initial setup */
+
 const numberOfCards = 12;
 const numberOfTypes = 3;
 let turn = 1;
 const chances = 24;
 let position = [];
 
-/*filling am array with random numbers*/
+/* function for filling am array with random numbers */
 
 function fillPositions(array) {
   let random = Math.floor(Math.random() * numberOfCards);
@@ -28,8 +36,6 @@ function fillPositions(array) {
   }
   return array;
 }
-
-position = fillPositions(position);
 
 /* seting up my cards in an ordered array */
 
@@ -62,7 +68,12 @@ function setCards (arr, masterArr) {
   return masterArr;
 }
 
-/* here is my ordered array */
+/* so here we'll create a random array filled with numbers */
+
+position = fillPositions(position);
+
+/* and here we declare an ordered array filled with cards */
+
 let cards = getCards(card1, card2, card3);
 
 /* and now we shuffle */
@@ -77,13 +88,11 @@ $('#begin').one('click', function(){
   let name = $('#name').val();
   $('#name').html(name);
   $('#container').removeClass('invisible');
-  for (var i = 0; i < cards.length; i++) {
-    console.log(cards[i])
-    $('#container').append(cards[i]['front'].clone());
-    /* Adding .back class so we don't see the content */
-/*    $('.card').each(function() {
-    $( this ).addClass('back');
-*/    }
+
+    for (var i = 0; i < cards.length; i++) {
+      $('#container').append(cards[i]['front'].clone());
+    }
+
   });
 
 /* some functions to check if cards match and if there are
@@ -109,14 +118,27 @@ function endGame (cards) {
 
 // let the game begin //
 
+/* we'll save both the object and the clicked elements in separate arrays
+I know I could have done this with a variable and $this but it feels easier
+to read when done this way */
+
 let clicked = [];
 let clickedDiv = [];
 let keepGoing = endGame(cards);
 
 $(document).on('click', '.card', function() {
+
     /* Using the index of the clicked element should give me the index
-    of my desired object */
+    of my desired object.
+
+    I'm pretty sure I could have done the comparision using just css classes
+    but objects feel... cleaner
+    */
+
     let index = $(this).index();
+
+    /* so, this should only work while turn is less or = to 24, and there are still unmatched
+    cards in the board. It should also prevent users from clicking on a card while it's shuffled */
 
     if (turn <= chances && keepGoing == true && $( this ).hasClass('clicked-card') == false) {
 
@@ -126,6 +148,7 @@ $(document).on('click', '.card', function() {
 
         /* We need to save both the object and its corresponding
         div */
+
         clicked.push(cards[index]);
         clickedDiv.push( this );
 
@@ -140,13 +163,20 @@ $(document).on('click', '.card', function() {
 
             else {
 
+        /* cards that are not a match need to be flipped back */
+
               setTimeout(function() {
                 $('.flipped').removeClass('flip').removeClass('flipped').removeClass('clicked-card');
               }, 600);
 
+        /*let's take advantage of javascript's way of handling memory references
+        and let's set our objects from this array instead of the original one */
+
               clicked[0]['clicked'] = false;
               clicked[1]['clicked'] = false;
             }
+
+        /* and we clean up all of our arrays */
 
           clicked = [];
           clickedDiv = [];
@@ -156,6 +186,8 @@ $(document).on('click', '.card', function() {
           }
         }
       }
+
+      /* win / lose modals */
 
       if (turn <= chances && keepGoing == false) {
         $('#status').removeClass('hidden').addClass('status');
@@ -168,6 +200,12 @@ $(document).on('click', '.card', function() {
       }
   });
 
+    /* reload the page if user wants to retry */
+
 $('#retry').on('click', function(){
   window.location.reload(true);
 });
+
+/* Thanks for taking the time to read my code, I had a blast coding it and sincerly
+ hope it wasn't too filled
+ with bad decisions */
